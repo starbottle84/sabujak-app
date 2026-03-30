@@ -53,26 +53,71 @@ const appId = 'sabujak-app-v1';
 
 // --- Data: 20 Themes ---
 const ALL_THEMES = [
+  // 식물 (10)
   { id: 'sunflower', name: '해바라기', category: '식물', emojis: ['🌱','🌿','🪴','🌻','🐝🌻','✨🌻'], images: [null, null, null, null, null, null], stages: ['씨앗','새싹','줄기','꽃봉오리','활짝 핀 꽃','눈부신 해바라기'] },
+  { id: 'rose', name: '장미', category: '식물', emojis: ['🌱','🌿','🌵','🌷','🌹','🦋🌹'], images: [null, null, null, null, null, null], stages: ['씨앗','새싹','가시 줄기','꽃봉오리','빨간 장미','아름다운 장미'] },
+  { id: 'cactus', name: '선인장', category: '식물', emojis: ['🌱','🌵','🌵🌸','🏜️🌵','🐫🌵','✨🌵'], images: [null, null, null, null, null, null], stages: ['씨앗','꼬마 선인장','꽃 핀 선인장','사막 선인장','낙타 친구','거대 선인장'] },
+  { id: 'bamboo', name: '대나무', category: '식물', emojis: ['🌱','🌿','🎋','🎍','🐼🎍','🎋✨'], images: [null, null, null, null, null, null], stages: ['죽순','어린 대나무','잎사귀','마디 대나무','판다와 대나무','울창한 대나무숲'] },
+  { id: 'tulip', name: '튤립', category: '식물', emojis: ['🧅','🌱','🌿','🌷','💐','✨💐'], images: [null, null, null, null, null, null], stages: ['구근','새싹','줄기와 잎','꽃봉오리','활짝 핀 튤립','튤립 다발'] },
+  { id: 'cherry', name: '벚꽃', category: '식물', emojis: ['🌱','🌿','🌳','🌸','🌸✨','🏞️🌸'], images: [null, null, null, null, null, null], stages: ['씨앗','어린 나무','가지','꽃망울','활짝 핀 벚꽃','벚꽃 동산'] },
+  { id: 'maple', name: '단풍나무', category: '식물', emojis: ['🌱','🌿','🌳','🍁','🍂','⛺🍁'], images: [null, null, null, null, null, null], stages: ['씨앗','나무','초록 잎','붉은 단풍','낙엽 나무','캠핑 나무'] },
+  { id: 'lily', name: '백합', category: '식물', emojis: ['🌱','🌿','🪴','🌼','💐','✨🌼'], images: [null, null, null, null, null, null], stages: ['씨앗','새싹','줄기','꽃봉오리','순백의 백합','은하수 백합'] },
+  { id: 'clover', name: '클로버', category: '식물', emojis: ['🌱','☘️','🍀','🐞🍀','🧚🍀','✨🍀'], images: [null, null, null, null, null, null], stages: ['새싹','세잎 클로버','네잎 클로버','무당벌레 클로버','요정 클로버','행운의 평원'] },
+  { id: 'lavender', name: '라벤더', category: '식물', emojis: ['🌱','🌿','🪴','🌾','🟣','✨🌾'], images: [null, null, null, null, null, null], stages: ['씨앗','새싹','줄기','보랏빛 봉오리','라벤더 꽃','보라색 평원'] },
+  // 동물 (10)
   { id: 'cat', name: '고양이', category: '동물', emojis: ['🍼','🐱','🐈','🧶🐈','👑🐈','✨🐈'], images: [null, null, null, null, null, null], stages: ['아기 고양이','어린 고양이','산책 고양이','장난꾸러기','고양이 대장','전설의 고양이'] },
   { id: 'dog', name: '강아지', category: '동물', emojis: ['🍼','🐶','🐕','🥏🐕','🦮','✨🐕'], images: [null, null, null, null, null, null], stages: ['아기 강아지','꼬마 강아지','달리는 강아지','원반왕 강아지','듬직한 강아지','히어로 강아지'] },
   { id: 'rabbit', name: '토끼', category: '동물', emojis: ['🍼','🐰','🐇','🥕🐇','🎩🐰','✨🐰'], images: [null, null, null, null, null, null], stages: ['아기 토끼','쫑긋 토끼','깡총 토끼','당근 냠냠','마술사 토끼','달나라 토끼'] },
+  { id: 'bear', name: '곰', category: '동물', emojis: ['🍼','🐻','🍯🐻','🐻‍❄️','🐾🐻','✨🐻'], images: [null, null, null, null, null, null], stages: ['아기 곰','꼬마 곰','꿀단지 곰','듬직한 백곰','어른 곰','숲의 수호신'] },
   { id: 'panda', name: '판다', category: '동물', emojis: ['🍼','🐼','🎋🐼','💤🐼','🐼🎾','✨🐼'], images: [null, null, null, null, null, null], stages: ['꼬맹이 판다','대나무꾼','잠꾸러기','데굴데굴','판다 대장','우주 판다'] },
+  { id: 'penguin', name: '펭귄', category: '동물', emojis: ['🥚','🐣','🐧','🐟🐧','❄️🐧','✨🐧'], images: [null, null, null, null, null, null], stages: ['알','아기 펭귄','뒤뚱뒤뚱','사냥꾼 펭귄','남극의 왕','얼음 황제'] },
+  { id: 'hamster', name: '햄스터', category: '동물', emojis: ['🍼','🐹','🐹🌻','🐹🐹','🏠🐹','✨🐹'], images: [null, null, null, null, null, null], stages: ['아기 햄찌','해씨 냠냠','볼빵빵 햄찌','햄스터 친구들','햄스터 하우스','전설의 햄찌'] },
+  { id: 'chick', name: '병아리', category: '동물', emojis: ['🥚','🐣','🐥','🐤','🐔','✨🐓'], images: [null, null, null, null, null, null], stages: ['알','탄생','솜털 병아리','삐약삐약','어른 닭','황금 수탉'] },
+  { id: 'fox', name: '사막여우', category: '동물', emojis: ['🍼','🦊','🏜️🦊','💤🦊','👑🦊','✨🦊'], images: [null, null, null, null, null, null], stages: ['아기 여우','귀가 큰 여우','모래놀이','잠꾸러기','사막의 왕','신비한 여우'] },
+  { id: 'quokka', name: '쿼카', category: '동물', emojis: ['🍼','🐹','🐹🤳','🐹🌿','🐹✨','✨🏆'], images: [null, null, null, null, null, null], stages: ['아기 쿼카','방긋 쿼카','셀카왕 쿼카','잎사귀 냠냠','웃음 대장','행복 전도사'] },
 ];
 
 const ROUTINE_TEMPLATES = [
   { task: '이불 개기', icon: '🛏️', points: 10, cat: '생활' },
   { task: '양치하기', icon: '🪥', points: 20, cat: '생활' },
   { task: '세수하기', icon: '🧼', points: 10, cat: '생활' },
+  { task: '기지개 켜기', icon: '🤸', points: 10, cat: '생활' },
   { task: '옷 갈아입기', icon: '👕', points: 20, cat: '생활' },
+  { task: '머리 빗기', icon: '🪮', points: 10, cat: '생활' },
   { task: '신발 정리', icon: '👟', points: 10, cat: '생활' },
+  { task: '비타민 먹기', icon: '💊', points: 10, cat: '생활' },
+  { task: '가방 챙기기', icon: '🎒', points: 20, cat: '생활' },
+  { task: '물 마시기', icon: '💧', points: 10, cat: '생활' },
+  { task: '손 씻기', icon: '🫧', points: 10, cat: '생활' },
+  { task: '목욕하기', icon: '🛁', points: 30, cat: '생활' },
+  { task: '방 청소하기', icon: '🧹', points: 30, cat: '생활' },
+  { task: '장난감 정리', icon: '🧸', points: 20, cat: '생활' },
+  { task: '불 끄고 눕기', icon: '💡', points: 20, cat: '생활' },
   { task: '숙제하기', icon: '✏️', points: 30, cat: '학습' },
   { task: '독서 30분', icon: '📚', points: 30, cat: '학습' },
+  { task: '학습지 풀기', icon: '📖', points: 30, cat: '학습' },
   { task: '일기 쓰기', icon: '📓', points: 30, cat: '학습' },
+  { task: '영어 단어', icon: '🔤', points: 20, cat: '학습' },
+  { task: '악기 연습', icon: '🎹', points: 30, cat: '학습' },
+  { task: '그림 그리기', icon: '🎨', points: 20, cat: '학습' },
+  { task: '알림장 확인', icon: '📝', points: 10, cat: '학습' },
+  { task: '수학 문제', icon: '🔢', points: 30, cat: '학습' },
+  { task: '한자 공부', icon: '🈵', points: 20, cat: '학습' },
   { task: '인사 잘하기', icon: '🙋', points: 20, cat: '마음' },
+  { task: '부모님 안마', icon: '💆', points: 30, cat: '마음' },
+  { task: '감사한 일 말하기', icon: '🙏', points: 20, cat: '마음' },
+  { task: '식물 물주기', icon: '🪴', points: 20, cat: '마음' },
+  { task: '거울 보고 웃기', icon: '🪞', points: 10, cat: '마음' },
   { task: '심부름 하기', icon: '🧺', points: 30, cat: '마음' },
+  { task: '반려동물 챙기기', icon: '🦴', points: 20, cat: '마음' },
+  { task: '친구 칭찬하기', icon: '👍', points: 20, cat: '마음' },
+  { task: '고운 말 쓰기', icon: '🗣️', points: 20, cat: '마음' },
+  { task: '식탁 닦기', icon: '🧻', points: 20, cat: '마음' },
   { task: '줄넘기 하기', icon: '➰', points: 30, cat: '운동' },
   { task: '스트레칭', icon: '🧘', points: 20, cat: '운동' },
+  { task: '축구 연습', icon: '⚽', points: 30, cat: '운동' },
+  { task: '동네 산책', icon: '👟', points: 30, cat: '운동' },
+  { task: '제자리 뛰기', icon: '🏃', points: 20, cat: '운동' },
 ];
 
 const DEFAULT_AM = [
@@ -97,6 +142,7 @@ export default function App() {
   
   const [activeTab, setActiveTab] = useState('home'); 
   const [settingsTab, setSettingsTab] = useState('themes'); 
+  const [statsPeriod, setStatsPeriod] = useState('week');
   const [modalType, setModalType] = useState(null); 
   const [templateTarget, setTemplateTarget] = useState(null);
   const [pinInput, setPinInput] = useState('');
@@ -172,9 +218,6 @@ export default function App() {
       });
     } catch (err) {
       console.error("Firestore Save Error:", err);
-      if (err.code === 'permission-denied') {
-          showToast("❌ 저장 권한이 없습니다. Firebase 설정을 확인하세요.");
-      }
     }
   };
 
@@ -191,7 +234,7 @@ export default function App() {
     } catch (err) {
       console.error("Login Error:", err);
       if (err.code === 'auth/unauthorized-domain') {
-          showToast("⚠️ 이 도메인은 승인되지 않았습니다. Firebase 콘솔 설정을 확인하세요.");
+          showToast("⚠️ 도메인 승인 오류. Firebase 콘솔 설정을 확인하세요.");
       } else {
           showToast("로그인 중 오류가 발생했습니다.");
       }
@@ -267,15 +310,49 @@ export default function App() {
     }
   };
 
+  const renderStats = () => {
+    const displayCount = statsPeriod === 'week' ? 7 : statsPeriod === 'month' ? 30 : 12;
+    // 빈 데이터 채우기 (최소 7개)
+    const data = history.length > 0 ? history : Array.from({length: 7}, (_, i) => ({
+      date: `0${i+1}`, amCount: 0, pmCount: 0
+    }));
+    const maxVal = Math.max(...data.map(d => (d.amCount || 0) + (d.pmCount || 0)), 1);
+
+    return (
+      <div className="flex flex-col h-full space-y-6">
+        <div className="flex justify-center space-x-2 bg-slate-100 p-1 rounded-xl">
+          {['week', 'month'].map(p => (
+            <button key={p} onClick={() => setStatsPeriod(p)} className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${statsPeriod === p ? 'bg-white shadow-sm text-orange-600' : 'text-slate-500'}`}>{p === 'week' ? '주간' : '월간'}</button>
+          ))}
+        </div>
+        <div className="flex-1 bg-white rounded-2xl border border-slate-100 p-6 flex items-end justify-between space-x-2 min-h-[200px]">
+          {data.slice(-displayCount).map((d, i) => (
+            <div key={i} className="flex-1 flex flex-col items-center group relative">
+              <div className="w-full flex flex-col-reverse items-center space-y-reverse space-y-1">
+                <div style={{ height: `${((d.amCount || 0) / maxVal) * 120}px` }} className="w-full max-w-[12px] bg-amber-400 rounded-t-full transition-all duration-300" />
+                <div style={{ height: `${((d.pmCount || 0) / maxVal) * 120}px` }} className="w-full max-w-[12px] bg-indigo-400 rounded-t-full transition-all duration-300" />
+              </div>
+              <div className="mt-2 text-[10px] text-slate-400 font-medium truncate w-full text-center">{(d.date && d.date.includes('-')) ? d.date.split('-')[2] : i+1}</div>
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-center space-x-4 text-xs font-bold text-slate-500">
+          <div className="flex items-center space-x-1"><div className="w-3 h-3 bg-amber-400 rounded-full" /><span>오전</span></div>
+          <div className="flex items-center space-x-1"><div className="w-3 h-3 bg-indigo-400 rounded-full" /><span>오후</span></div>
+        </div>
+      </div>
+    );
+  };
+
   // --- Views ---
 
   if (loading) {
     return (
       <div className="fixed inset-0 bg-white flex flex-col items-center justify-center z-[200]">
-        <div className="w-32 h-32 bg-orange-100 rounded-[40px] flex items-center justify-center mb-8 animate-bounce">
-          <ImageIcon size={64} className="text-orange-500" />
+        <div className="w-32 h-32 bg-orange-100 rounded-[40px] flex items-center justify-center mb-8 animate-bounce text-orange-500">
+          <ImageIcon size={64} />
         </div>
-        <h1 className="text-3xl font-black text-orange-500 tracking-tighter mb-2">SABUJAK</h1>
+        <h1 className="text-4xl font-black text-orange-500 tracking-tighter mb-2">사부작</h1>
         <p className="text-slate-400 font-bold animate-pulse">우리 아이 습관 도우미</p>
       </div>
     );
@@ -295,10 +372,6 @@ export default function App() {
               <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="w-5 h-5" alt="Google" /> 구글로 시작하기
             </button>
             <button onClick={() => login('anonymous')} className="w-full py-4 bg-slate-100 text-slate-600 rounded-2xl font-bold hover:bg-slate-200 transition-all">익명으로 시작하기</button>
-            <div className="grid grid-cols-2 gap-3">
-              <button onClick={() => login('naver')} className="py-4 bg-[#03C75A] text-white rounded-2xl font-bold text-sm">네이버</button>
-              <button onClick={() => login('kakao')} className="py-4 bg-[#FEE500] text-slate-900 rounded-2xl font-bold text-sm">카카오</button>
-            </div>
           </div>
         </div>
       </div>
@@ -312,7 +385,7 @@ export default function App() {
       <div className="w-full max-w-4xl bg-white rounded-[40px] shadow-2xl overflow-hidden flex flex-col border border-slate-100">
         <header className="px-8 py-6 flex justify-between items-center border-b border-slate-50">
           <div className="flex flex-col">
-            <span className="text-orange-500 font-black text-2xl tracking-tighter">SABUJAK</span>
+            <span className="text-orange-500 font-black text-4xl tracking-tighter">사부작</span>
             <span className="text-slate-400 text-sm font-medium">{new Date().toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'short' })}</span>
           </div>
           <div className="flex items-center gap-2">
@@ -324,12 +397,12 @@ export default function App() {
         {activeTab === 'home' ? (
           <main className="flex flex-col md:flex-row p-6 sm:p-8 gap-8 h-full min-h-[600px]">
             <div className="flex flex-col gap-6 w-full md:w-1/3">
-              <button onClick={() => setModalType('am')} className="flex-1 group bg-amber-50 hover:bg-amber-100 rounded-[32px] p-6 flex flex-col items-center justify-center transition-all">
+              <button onClick={() => setModalType('am')} className="flex-1 group bg-amber-50 hover:bg-amber-100 rounded-[32px] p-6 flex flex-col items-center justify-center transition-all border-2 border-transparent hover:border-amber-200">
                 <div className="p-5 bg-white rounded-3xl shadow-sm mb-4 group-hover:scale-110 transition-transform"><Sun size={40} className="text-amber-500" /></div>
                 <span className="text-xl font-black text-amber-700">오전 사부작</span>
                 <span className="text-sm text-amber-600 font-bold opacity-70">시작하기</span>
               </button>
-              <button onClick={() => setModalType('pm')} className="flex-1 group bg-indigo-50 hover:bg-indigo-100 rounded-[32px] p-6 flex flex-col items-center justify-center transition-all">
+              <button onClick={() => setModalType('pm')} className="flex-1 group bg-indigo-50 hover:bg-indigo-100 rounded-[32px] p-6 flex flex-col items-center justify-center transition-all border-2 border-transparent hover:border-indigo-200">
                 <div className="p-5 bg-white rounded-3xl shadow-sm mb-4 group-hover:scale-110 transition-transform"><Moon size={40} className="text-indigo-500" /></div>
                 <span className="text-xl font-black text-indigo-700">오후 사부작</span>
                 <span className="text-sm text-indigo-600 font-bold opacity-70">마무리하기</span>
@@ -354,28 +427,28 @@ export default function App() {
               </div>
               <div className="w-full space-y-4">
                 <div className="flex justify-between items-end mb-1">
-                  <span className="text-sm font-black text-slate-500">GROWTH PROGRESS</span>
+                  <span className="text-sm font-black text-slate-500">성장도</span>
                   <span className="text-2xl font-black text-orange-600">{progress}%</span>
                 </div>
                 <div className="h-6 w-full bg-slate-100 rounded-full overflow-hidden p-1 shadow-inner">
                   <div className="h-full bg-gradient-to-r from-amber-400 to-orange-500 rounded-full transition-all duration-700" style={{ width: `${progress}%` }} />
                 </div>
-                <div className="text-center text-slate-400 font-bold text-sm">TOTAL: <span className="text-slate-800">{score}</span> POINTS</div>
+                <div className="text-center text-slate-400 font-bold text-sm">누적 점수: <span className="text-slate-800">{score}</span> 점</div>
               </div>
             </div>
           </main>
         ) : (
-          /* Settings View */
           <div className="flex flex-col h-full min-h-[600px]">
-            <nav className="flex px-8 border-b border-slate-50 bg-slate-50/50">
-              {['themes', 'routines', 'security'].map(t => (
-                <button key={t} onClick={() => setSettingsTab(t)} className={`px-6 py-5 text-sm font-black transition-all relative ${settingsTab === t ? 'text-orange-600' : 'text-slate-400'}`}>
-                  {t === 'themes' ? '테마' : t === 'routines' ? '루틴' : '보안'}
+            <nav className="flex px-4 sm:px-8 border-b border-slate-50 bg-slate-50/50 overflow-x-auto whitespace-nowrap">
+              {['themes', 'routines', 'stats', 'security'].map(t => (
+                <button key={t} onClick={() => setSettingsTab(t)} className={`px-4 sm:px-6 py-5 text-sm font-black transition-all relative ${settingsTab === t ? 'text-orange-600' : 'text-slate-400'}`}>
+                  {t === 'themes' ? '테마' : t === 'routines' ? '루틴' : t === 'stats' ? '통계' : '보안'}
                   {settingsTab === t && <div className="absolute bottom-0 left-0 w-full h-1 bg-orange-600 rounded-t-full" />}
                 </button>
               ))}
             </nav>
             <div className="p-8 flex-1 overflow-y-auto max-h-[500px]">
+              {settingsTab === 'stats' && renderStats()}
               {settingsTab === 'security' && (
                 <div className="max-w-sm mx-auto space-y-6 text-center">
                    <div className="p-4 bg-slate-100 rounded-3xl text-slate-400 inline-block mb-4"><Lock size={32}/></div>
@@ -385,11 +458,11 @@ export default function App() {
                 </div>
               )}
               {settingsTab === 'themes' && (
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pb-10">
                   {ALL_THEMES.map(theme => (
                     <button key={theme.id} onClick={() => { setCurrentThemeId(theme.id); saveData(score, theme.id, amRoutines, pmRoutines, history, parentPin); }} className={`p-4 rounded-3xl border-2 transition-all flex flex-col items-center gap-2 ${currentThemeId === theme.id ? 'border-orange-500 bg-orange-50 shadow-md' : 'border-slate-100 hover:border-slate-200'}`}>
-                      <span className="text-4xl">{theme.emojis[stageIndex] || theme.emojis[0]}</span>
-                      <span className="font-bold text-sm">{theme.name}</span>
+                      <span className="text-4xl">{theme.emojis[5]}</span>
+                      <span className="font-bold text-xs">{theme.name}</span>
                     </button>
                   ))}
                 </div>
@@ -461,7 +534,10 @@ export default function App() {
             <div className="flex-1 overflow-y-auto p-6 grid grid-cols-2 gap-3">
               {ROUTINE_TEMPLATES.map((tmpl, i) => (
                 <button key={i} onClick={() => addTemplateRoutine(tmpl)} className="flex flex-col items-start p-4 bg-white border border-slate-100 rounded-3xl hover:border-orange-300 hover:bg-orange-50 text-left">
-                  <span className="text-3xl mb-2">{tmpl.icon}</span>
+                  <div className="flex items-center justify-between w-full mb-1">
+                    <span className="text-3xl">{tmpl.icon}</span>
+                    <span className="text-[10px] bg-slate-100 px-1.5 py-0.5 rounded-full text-slate-400 font-black">{tmpl.cat}</span>
+                  </div>
                   <span className="font-black text-slate-700 text-sm leading-tight">{tmpl.task}</span>
                   <span className="text-[10px] font-black text-orange-500 mt-1">+{tmpl.points} PT</span>
                 </button>
@@ -497,7 +573,7 @@ export default function App() {
         </div>
       )}
 
-      <footer className="mt-8 text-slate-300 font-black text-[10px] tracking-[0.3em] uppercase">Small habits create big changes</footer>
+      <footer className="mt-8 text-slate-300 font-black text-[10px] tracking-[0.3em] uppercase text-center px-4">Small habits create big changes</footer>
     </div>
   );
 }

@@ -1,49 +1,25 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
-  Settings, 
-  Sun, 
-  Moon, 
-  Plus, 
-  Trash2, 
-  CheckCircle2, 
-  Circle, 
-  X, 
-  Save, 
-  ChevronRight,
-  TrendingUp,
-  Sparkles,
-  Search,
-  Hash,
-  Lock,
-  LogOut,
-  Image as ImageIcon
+  Settings, Sun, Moon, Plus, Trash2, CheckCircle2, Circle, X, Save, 
+  ChevronRight, TrendingUp, Sparkles, Search, Hash, Lock, LogOut, Image as ImageIcon
 } from 'lucide-react';
 
 import { initializeApp } from 'firebase/app';
+import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import { 
-  getFirestore, 
-  doc, 
-  setDoc, 
-  getDoc, 
-  onSnapshot,
-  updateDoc 
-} from 'firebase/firestore';
-import { 
-  getAuth, 
-  signInAnonymously, 
-  onAuthStateChanged,
-  GoogleAuthProvider,
-  signInWithPopup
+  getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut
 } from 'firebase/auth';
+
+import { ALL_THEMES, ROUTINE_TEMPLATES, DEFAULT_AM, DEFAULT_PM } from './constants/data';
 
 // --- Firebase Configuration ---
 const firebaseConfig = {
-  apiKey: "AIzaSyAkqKUlzthBLEEFqWTOB3uPRfrPBAit0Ag",
-  authDomain: "sabujak-fa47a.firebaseapp.com",
-  projectId: "sabujak-fa47a",
-  storageBucket: "sabujak-fa47a.firebasestorage.app",
-  messagingSenderId: "614209642026",
-  appId: "1:614209642026:web:1e68e1c4048f9497d7ad53"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);
@@ -51,47 +27,13 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const appId = 'sabujak-app-v1';
 
-// --- Data: 20 Themes ---
-const ALL_THEMES = [
-  { id: 'sunflower', name: '해바라기', category: '식물', emojis: ['🌱','🌿','🪴','🌻','🐝🌻','✨🌻'], images: [null, null, null, null, null, null], stages: ['씨앗','새싹','줄기','꽃봉오리','활짝 핀 꽃','눈부신 해바라기'] },
-  { id: 'cat', name: '고양이', category: '동물', emojis: ['🍼','🐱','🐈','🧶🐈','👑🐈','✨🐈'], images: [null, null, null, null, null, null], stages: ['아기 고양이','어린 고양이','산책 고양이','장난꾸러기','고양이 대장','전설의 고양이'] },
-  { id: 'dog', name: '강아지', category: '동물', emojis: ['🍼','🐶','🐕','🥏🐕','🦮','✨🐕'], images: [null, null, null, null, null, null], stages: ['아기 강아지','꼬마 강아지','달리는 강아지','원반왕 강아지','듬직한 강아지','히어로 강아지'] },
-  { id: 'rabbit', name: '토끼', category: '동물', emojis: ['🍼','🐰','🐇','🥕🐇','🎩🐰','✨🐰'], images: [null, null, null, null, null, null], stages: ['아기 토끼','쫑긋 토끼','깡총 토끼','당근 냠냠','마술사 토끼','달나라 토끼'] },
-  { id: 'panda', name: '판다', category: '동물', emojis: ['🍼','🐼','🎋🐼','💤🐼','🐼🎾','✨🐼'], images: [null, null, null, null, null, null], stages: ['꼬맹이 판다','대나무꾼','잠꾸러기','데굴데굴','판다 대장','우주 판다'] },
-];
-
-const ROUTINE_TEMPLATES = [
-  { task: '이불 개기', icon: '🛏️', points: 10, cat: '생활' },
-  { task: '양치하기', icon: '🪥', points: 20, cat: '생활' },
-  { task: '세수하기', icon: '🧼', points: 10, cat: '생활' },
-  { task: '옷 갈아입기', icon: '👕', points: 20, cat: '생활' },
-  { task: '신발 정리', icon: '👟', points: 10, cat: '생활' },
-  { task: '숙제하기', icon: '✏️', points: 30, cat: '학습' },
-  { task: '독서 30분', icon: '📚', points: 30, cat: '학습' },
-  { task: '일기 쓰기', icon: '📓', points: 30, cat: '학습' },
-  { task: '인사 잘하기', icon: '🙋', points: 20, cat: '마음' },
-  { task: '심부름 하기', icon: '🧺', points: 30, cat: '마음' },
-  { task: '줄넘기 하기', icon: '➰', points: 30, cat: '운동' },
-  { task: '스트레칭', icon: '🧘', points: 20, cat: '운동' },
-];
-
-const DEFAULT_AM = [
-  { id: 'am1', task: '이불 개기', points: 10, icon: '🛏️', done: false },
-  { id: 'am2', task: '양치하기', points: 20, icon: '🪥', done: false },
-];
-
-const DEFAULT_PM = [
-  { id: 'pm1', task: '장난감 정리', points: 20, icon: '🧸', done: false },
-  { id: 'pm2', task: '책 한 권 읽기', points: 30, icon: '📚', done: false },
-];
-
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [score, setScore] = useState(0);
   const [currentThemeId, setCurrentThemeId] = useState('sunflower');
-  const [amRoutines, setAmRoutines] = useState(DEFAULT_AM);
-  const [pmRoutines, setPmRoutines] = useState(DEFAULT_PM);
+  const [amRoutines, setAmRoutines] = useState([]);
+  const [pmRoutines, setPmRoutines] = useState([]);
   const [history, setHistory] = useState([]); 
   const [parentPin, setParentPin] = useState('0000');
   
@@ -108,54 +50,44 @@ export default function App() {
   };
 
   // 1. Splash Loading & Auth Initialization
+  // 구글 로그인 유지 버그 수정: 초기 마운트 시 강제로 signInAnonymously를 호출하지 않고 onAuthStateChanged를 기다림.
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 2500);
     const unsubscribe = onAuthStateChanged(auth, (u) => {
       setUser(u);
     });
-    
-    const initAuth = async () => {
-        try {
-            if (!auth.currentUser) {
-                await signInAnonymously(auth);
-            }
-        } catch (err) {
-            console.error("Auth Error:", err);
-            if (err.code === 'auth/unauthorized-domain') {
-                showToast("⚠️ Firebase 콘솔에서 현재 도메인을 '승인된 도메인'에 추가해야 합니다.");
-            }
-        }
-    };
-    initAuth();
-
     return () => {
       clearTimeout(timer);
       unsubscribe();
     };
   }, []);
 
-  // 2. Sync Data with Firestore (RULE 1: 6 segments path)
+  // 2. Sync Data with Firestore
+  // 설정 변경 후 저장 안 되는 버그 수정: onSnapshot 대신 1회 fetch(getDoc) 후 저장은 수동으로. 입력 중간에 state가 덮어씌워지지 않음.
   useEffect(() => {
     if (!user) return;
-
-    const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'settings', 'data');
-    const unsubscribe = onSnapshot(userDocRef, (docSnap) => {
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        setScore(data.score || 0);
-        setCurrentThemeId(data.themeId || 'sunflower');
-        setAmRoutines(data.amRoutines || DEFAULT_AM);
-        setPmRoutines(data.pmRoutines || DEFAULT_PM);
-        setHistory(data.history || []);
-        setParentPin(data.parentPin || '0000');
-      } else {
-        saveData(0, 'sunflower', DEFAULT_AM, DEFAULT_PM, [], '0000');
-      }
-    }, (err) => {
+    const fetchSettings = async () => {
+      const userDocRef = doc(db, 'artifacts', appId, 'users', user.uid, 'settings', 'data');
+      try {
+        const docSnap = await getDoc(userDocRef);
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setScore(data.score || 0);
+          setCurrentThemeId(data.themeId || 'sunflower');
+          setAmRoutines(data.amRoutines || DEFAULT_AM);
+          setPmRoutines(data.pmRoutines || DEFAULT_PM);
+          setHistory(data.history || []);
+          setParentPin(data.parentPin || '0000');
+        } else {
+          saveData(0, 'sunflower', DEFAULT_AM, DEFAULT_PM, [], '0000');
+          setAmRoutines(DEFAULT_AM);
+          setPmRoutines(DEFAULT_PM);
+        }
+      } catch (err) {
         console.error("Firestore Loading Error:", err);
-    });
-
-    return () => unsubscribe();
+      }
+    };
+    fetchSettings();
   }, [user]);
 
   const saveData = async (s, tId, am, pm, hist, pin) => {
@@ -173,7 +105,7 @@ export default function App() {
     } catch (err) {
       console.error("Firestore Save Error:", err);
       if (err.code === 'permission-denied') {
-          showToast("❌ 저장 권한이 없습니다. Firebase 설정을 확인하세요.");
+          showToast("❌ 데이터베이스 저장 권한이 없습니다.");
       }
     }
   };
@@ -190,11 +122,7 @@ export default function App() {
       }
     } catch (err) {
       console.error("Login Error:", err);
-      if (err.code === 'auth/unauthorized-domain') {
-          showToast("⚠️ 이 도메인은 승인되지 않았습니다. Firebase 콘솔 설정을 확인하세요.");
-      } else {
-          showToast("로그인 중 오류가 발생했습니다.");
-      }
+      showToast(`로그인 오류: ${err.code || err.message}`);
     }
   };
 
@@ -224,9 +152,13 @@ export default function App() {
     }
 
     setScore(newScore);
+    setAmRoutines(newAm);
+    setPmRoutines(newPm);
     saveData(newScore, currentThemeId, newAm, newPm, newHist, parentPin);
     showToast(`✨ ${targetRoutine.task} 완료! +${targetRoutine.points}점!`);
-    setModalType(null);
+    
+    // Check if we need to show celebration if enough points are collected...
+    // But for now just close modal.
   };
 
   const deleteRoutine = (id, type) => {
@@ -242,7 +174,11 @@ export default function App() {
     const newPm = type === 'pm' ? pmRoutines.map(r => r.id === id ? { ...r, [field]: value } : r) : pmRoutines;
     setAmRoutines(newAm);
     setPmRoutines(newPm);
-    saveData(score, currentThemeId, newAm, newPm, history, parentPin);
+  };
+
+  const handleRoutinePointsBlur = () => {
+    // Save when user finishes typing the numbers.
+    saveData(score, currentThemeId, amRoutines, pmRoutines, history, parentPin);
   };
 
   const addTemplateRoutine = (template) => {
@@ -295,10 +231,6 @@ export default function App() {
               <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="w-5 h-5" alt="Google" /> 구글로 시작하기
             </button>
             <button onClick={() => login('anonymous')} className="w-full py-4 bg-slate-100 text-slate-600 rounded-2xl font-bold hover:bg-slate-200 transition-all">익명으로 시작하기</button>
-            <div className="grid grid-cols-2 gap-3">
-              <button onClick={() => login('naver')} className="py-4 bg-[#03C75A] text-white rounded-2xl font-bold text-sm">네이버</button>
-              <button onClick={() => login('kakao')} className="py-4 bg-[#FEE500] text-slate-900 rounded-2xl font-bold text-sm">카카오</button>
-            </div>
           </div>
         </div>
       </div>
@@ -316,7 +248,7 @@ export default function App() {
             <span className="text-slate-400 text-sm font-medium">{new Date().toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'short' })}</span>
           </div>
           <div className="flex items-center gap-2">
-            <button onClick={() => auth.signOut()} className="p-3 text-slate-300 hover:text-red-500"><LogOut size={20}/></button>
+            <button onClick={() => signOut(auth)} className="p-3 text-slate-300 hover:text-red-500"><LogOut size={20}/></button>
             <button onClick={() => activeTab === 'home' ? setModalType('pin') : setActiveTab('home')} className="p-3 bg-slate-50 rounded-2xl text-slate-500 hover:text-orange-600 transition-all">{activeTab === 'home' ? <Settings size={24} /> : <X size={24} />}</button>
           </div>
         </header>
@@ -343,9 +275,9 @@ export default function App() {
                 <p className="text-slate-400 font-bold text-sm uppercase tracking-widest">{currentTheme.category}</p>
               </div>
               <div className="flex flex-col items-center py-10">
-                <div className="mb-6 transform hover:scale-110 transition-transform">
+                <div className="mb-6 transform hover:scale-110 transition-transform flex items-center justify-center">
                   {currentTheme.images?.[stageIndex] ? (
-                    <img src={currentTheme.images[stageIndex]} alt="stage" className="w-48 h-48 object-contain" />
+                    <img src={currentTheme.images[stageIndex]} alt="stage" className="w-48 h-48 sm:w-64 sm:h-64 object-contain" />
                   ) : (
                     <div className="text-[120px] leading-none animate-pulse">{currentTheme.emojis[stageIndex]}</div>
                   )}
@@ -365,7 +297,6 @@ export default function App() {
             </div>
           </main>
         ) : (
-          /* Settings View */
           <div className="flex flex-col h-full min-h-[600px]">
             <nav className="flex px-8 border-b border-slate-50 bg-slate-50/50">
               {['themes', 'routines', 'security'].map(t => (
@@ -388,7 +319,7 @@ export default function App() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   {ALL_THEMES.map(theme => (
                     <button key={theme.id} onClick={() => { setCurrentThemeId(theme.id); saveData(score, theme.id, amRoutines, pmRoutines, history, parentPin); }} className={`p-4 rounded-3xl border-2 transition-all flex flex-col items-center gap-2 ${currentThemeId === theme.id ? 'border-orange-500 bg-orange-50 shadow-md' : 'border-slate-100 hover:border-slate-200'}`}>
-                      <span className="text-4xl">{theme.emojis[stageIndex] || theme.emojis[0]}</span>
+                      {theme.images?.[0] ? <img src={theme.images[stageIndex] || theme.images[0]} alt={theme.name} className="w-16 h-16 object-contain" /> : <span className="text-4xl">{theme.emojis[stageIndex] || theme.emojis[0]}</span>}
                       <span className="font-bold text-sm">{theme.name}</span>
                     </button>
                   ))}
@@ -405,7 +336,7 @@ export default function App() {
                           <div className="flex items-center gap-3">
                             <div className="flex items-center bg-slate-50 rounded-xl px-2 border border-slate-100 focus-within:border-orange-300">
                               <Hash size={14} className="text-slate-400 mr-1" />
-                              <input type="number" value={r.points} onChange={(e) => updateRoutineField(r.id, 'am', 'points', parseInt(e.target.value) || 0)} className="w-12 py-1 bg-transparent text-sm font-black text-orange-600 outline-none text-right" />
+                              <input type="number" onBlur={handleRoutinePointsBlur} value={r.points !== undefined ? r.points : 0} onChange={(e) => updateRoutineField(r.id, 'am', 'points', parseInt(e.target.value) || 0)} className="w-12 py-1 bg-transparent text-sm font-black text-orange-600 outline-none text-right" />
                             </div>
                             <button onClick={() => deleteRoutine(r.id, 'am')} className="text-slate-300 hover:text-red-500 p-1"><Trash2 size={18}/></button>
                           </div>
@@ -422,7 +353,7 @@ export default function App() {
                           <div className="flex items-center gap-3">
                             <div className="flex items-center bg-slate-50 rounded-xl px-2 border border-slate-100 focus-within:border-indigo-300">
                               <Hash size={14} className="text-slate-400 mr-1" />
-                              <input type="number" value={r.points} onChange={(e) => updateRoutineField(r.id, 'pm', 'points', parseInt(e.target.value) || 0)} className="w-12 py-1 bg-transparent text-sm font-black text-indigo-600 outline-none text-right" />
+                              <input type="number" onBlur={handleRoutinePointsBlur} value={r.points !== undefined ? r.points : 0} onChange={(e) => updateRoutineField(r.id, 'pm', 'points', parseInt(e.target.value) || 0)} className="w-12 py-1 bg-transparent text-sm font-black text-indigo-600 outline-none text-right" />
                             </div>
                             <button onClick={() => deleteRoutine(r.id, 'pm')} className="text-slate-300 hover:text-red-500 p-1"><Trash2 size={18}/></button>
                           </div>
@@ -444,7 +375,7 @@ export default function App() {
             <h3 className="text-2xl font-black mb-6">부모님 확인</h3>
             <input type="password" value={pinInput} onChange={e=>setPinInput(e.target.value)} maxLength={4} className="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl text-center text-3xl font-black mb-6 outline-none focus:border-orange-500" autoFocus />
             <div className="grid grid-cols-2 gap-4 w-full">
-              <button onClick={() => setModalType(null)} className="py-4 bg-slate-100 text-slate-400 font-black rounded-2xl">닫기</button>
+              <button onClick={() => {setModalType(null); setPinInput('');}} className="py-4 bg-slate-100 text-slate-400 font-black rounded-2xl">닫기</button>
               <button onClick={handlePinSubmit} className="py-4 bg-orange-600 text-white font-black rounded-2xl shadow-lg shadow-orange-200">확인</button>
             </div>
           </div>
@@ -460,7 +391,7 @@ export default function App() {
             </div>
             <div className="flex-1 overflow-y-auto p-6 grid grid-cols-2 gap-3">
               {ROUTINE_TEMPLATES.map((tmpl, i) => (
-                <button key={i} onClick={() => addTemplateRoutine(tmpl)} className="flex flex-col items-start p-4 bg-white border border-slate-100 rounded-3xl hover:border-orange-300 hover:bg-orange-50 text-left">
+                <button key={i} onClick={() => addTemplateRoutine(tmpl)} className="flex flex-col items-start p-4 bg-white border border-slate-100 rounded-3xl hover:border-orange-300 hover:bg-orange-50 text-left cursor-pointer">
                   <span className="text-3xl mb-2">{tmpl.icon}</span>
                   <span className="font-black text-slate-700 text-sm leading-tight">{tmpl.task}</span>
                   <span className="text-[10px] font-black text-orange-500 mt-1">+{tmpl.points} PT</span>
@@ -480,7 +411,7 @@ export default function App() {
             </div>
             <div className="flex-1 overflow-y-auto p-6 space-y-3">
               {(modalType === 'am' ? amRoutines : pmRoutines).map(r => (
-                <button key={r.id} onClick={() => !r.done && completeRoutine(r.id, modalType)} className={`w-full flex items-center justify-between p-5 rounded-3xl border-2 transition-all ${r.done ? 'bg-slate-50 opacity-50 border-slate-100' : 'bg-white border-slate-100 hover:border-orange-200 hover:shadow-md'}`}>
+                <button key={r.id} onClick={() => !r.done && completeRoutine(r.id, modalType)} className={`w-full flex items-center justify-between p-5 rounded-3xl border-2 transition-all ${r.done ? 'bg-slate-50 opacity-50 border-slate-100 cursor-default' : 'bg-white border-slate-100 hover:border-orange-200 hover:shadow-md cursor-pointer'}`}>
                   <div className="flex items-center gap-4 text-left">
                     <span className="text-3xl">{r.icon}</span>
                     <div>
